@@ -1,0 +1,36 @@
+-- Question 1 --
+{- Pure function is ; the function that gives the same
+   output when you give same input.
+   It is easier according to method of a class because of it
+   gives same output every time according to same inputs. But 
+   class methods can have side effects or variables in classes 
+   which their result depends on them.
+-}
+
+-- Question 2 -- 
+-- Part a described function
+syr :: Integer -> Integer
+syr x
+    | even x    = x `div` 2
+    | odd x     = 3*x +1
+    | otherwise = 1
+
+-- Part b recursive
+syracuse :: Integer -> [Integer]
+syracuse x = [x] ++ callsyr x
+    where
+        callsyr :: Integer -> [Integer]
+        callsyr x' 
+            | x' == 1    = []    
+            | odd x'     = [] ++ syracuse (3*x' +1)
+            | otherwise  = [] ++ syracuse (x' `div` 2)
+    
+-- Part c tail recursive
+syraT :: Integer -> Integer
+syraT x = syraTIter 1 x
+    where 
+        syraTIter :: Integer->Integer->Integer
+        syraTIter f1 f2 
+            | f2 == 1    = f2
+            | even f2    = syraTIter f1 (f2 `div` 2)
+            | otherwise  = syraTIter f1 (3*f2 + 1)
